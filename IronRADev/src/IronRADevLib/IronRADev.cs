@@ -13,7 +13,7 @@ namespace IronRADev
             public bool arg4;
             public bool recognised;
         }
-        public string[] itemList = { "write", "writel", "print", "printl", "+", "-", "/", "*", "%", "string", "num", "int" };
+        public string[] itemList = { "write", "writel", "print", "printl", "+", "-", "/", "*", "%", "string", "num", "int", "raw" };
         public string[] ironItemList = { "var" };
         public class IronRADevItems
         {
@@ -84,25 +84,15 @@ namespace IronRADev
                     return returnData;
                 }
             }
-            public class Printer
+            public class Printers
             {
-                public string ValPrinter(bool newLine, string varName)
+                public string Printer(bool newLine, string varName)
                 {
                     var lineReturn = "";
                     var line = "System.Console.WriteLine(varName);";
                     var noLine = "System.Console.Write(varName);";
                     lineReturn = newLine ? line.Replace("varName", varName) : noLine.Replace("varName", varName);
                     return lineReturn;
-                }
-
-                public string VarPrinter(bool newLine, string valueStr)
-                {
-                    var lineReturn = "";
-                    var line = "System.Console.WriteLine(varName);";
-                    var noLine = "System.Console.Write(varName);";
-                    lineReturn = newLine ? line.Replace("varName", valueStr) : noLine.Replace("varName", valueStr);
-                    return lineReturn;
-
                 }
             }
         }
@@ -117,18 +107,18 @@ namespace IronRADev
         {
             var data = "";
             if (!line.recognised) return "//Invalid Line: "+line.item;
-            var print = new RADevBaseItems.Printer();
+            var print = new RADevBaseItems.Printers();
             var varItems = new RADevBaseItems.Variables();
             var OPSItems = new RADevBaseItems.Operations();
             switch (line.item)
             {
                 case "writel":
                 case "write":
-                    data = print.VarPrinter(line.arg3, line.arg1);
+                    data = print.Printer(line.arg3, line.arg1);
                     break;
                 case "printl":
                 case "print":
-                    data = print.ValPrinter(line.arg3, line.arg1);
+                    data = print.Printer(line.arg3, line.arg1);
                     break;
                 case "int":
                     break;
@@ -152,6 +142,9 @@ namespace IronRADev
                     break;
                 case "%":
                     data = OPSItems.Mod(line.arg1, line.arg2);
+                    break;
+                case "raw":
+                    data = line.arg1;
                     break;
             }
             switch (line.item)
@@ -181,77 +174,83 @@ namespace IronRADev
                         lineReturn.recognised = true;
                     }
                 }
-                try
-                {
-                    switch (lineReturn.item)
+                if (lineReturn.recognised) {
+                    try
                     {
-                        case "writel":
-                            lineReturn.arg1 = lineToParse.Replace("writel", "");
-                            lineReturn.arg3 = true;
-                            break;
-                        case "write":
-                            lineReturn.arg1 = lineToParse.Replace("write", "");
-                            lineReturn.arg3 = false;
-                            break;
-                        case "printl":
-                            lineReturn.arg1 = lineToParse.Replace("printl", "");
-                            lineReturn.arg3 = true;
-                            break;
-                        case "print":
-                            lineReturn.arg1 = lineToParse.Replace("print", "");
-                            lineReturn.arg3 = true;
-                            break;
-                        case "int":
-                            lineReturn.arg1 = lineToParse.Split('=')[0];
-                            lineReturn.arg2 = lineToParse.Split('=')[1];
-                            lineReturn.arg1 = lineReturn.arg1.Replace("int", "");
-                            lineReturn.arg3 = true;
-                            break;
-                        case "num":
-                            lineReturn.arg1 = lineToParse.Split('=')[0];
-                            lineReturn.arg2 = lineToParse.Split('=')[1];
-                            lineReturn.arg1 = lineReturn.arg1.Replace("num", "");
-                            lineReturn.arg3 = false;
-                            break;
-                        case "string":
-                            lineReturn.arg1 = lineToParse.Split('=')[0];
-                            lineReturn.arg2 = lineToParse.Split('=')[1];
-                            lineReturn.arg1 = lineReturn.arg1.Replace("string", "");
-                            break;
-                        case "+":
-                            lineReturn.arg1 = lineToParse.Split('+')[0];
-                            lineReturn.arg2 = lineToParse.Split('+')[1];
-                            break;
-                        case "-":
-                            lineReturn.arg1 = lineToParse.Split('-')[0];
-                            lineReturn.arg2 = lineToParse.Split('-')[1];
-                            break;
-                        case "*":
-                            lineReturn.arg1 = lineToParse.Split('*')[0];
-                            lineReturn.arg2 = lineToParse.Split('*')[1];
-                            break;
-                        case "/":
-                            lineReturn.arg1 = lineToParse.Split('/')[0];
-                            lineReturn.arg2 = lineToParse.Split('/')[1];
-                            break;
-                        case "%":
-                            lineReturn.arg1 = lineToParse.Split('%')[0];
-                            lineReturn.arg2 = lineToParse.Split('%')[1];
-                            break;
+                        switch (lineReturn.item)
+                        {
+                            case "writel":
+                                lineReturn.arg1 = lineToParse.Replace("writel", "");
+                                lineReturn.arg3 = true;
+                                break;
+                            case "write":
+                                lineReturn.arg1 = lineToParse.Replace("write", "");
+                                lineReturn.arg3 = false;
+                                break;
+                            case "printl":
+                                lineReturn.arg1 = lineToParse.Replace("printl", "");
+                                lineReturn.arg3 = true;
+                                break;
+                            case "print":
+                                lineReturn.arg1 = lineToParse.Replace("print", "");
+                                lineReturn.arg3 = false;
+                                break;
+                            case "int":
+                                lineReturn.arg1 = lineToParse.Split('=')[0];
+                                lineReturn.arg2 = lineToParse.Split('=')[1];
+                                lineReturn.arg1 = lineReturn.arg1.Replace("int", "");
+                                lineReturn.arg3 = true;
+                                break;
+                            case "num":
+                                lineReturn.arg1 = lineToParse.Split('=')[0];
+                                lineReturn.arg2 = lineToParse.Split('=')[1];
+                                lineReturn.arg1 = lineReturn.arg1.Replace("num", "");
+                                lineReturn.arg3 = false;
+                                break;
+                            case "string":
+                                lineReturn.arg1 = lineToParse.Split('=')[0];
+                                lineReturn.arg2 = lineToParse.Split('=')[1];
+                                lineReturn.arg1 = lineReturn.arg1.Replace("string", "");
+                                break;
+                            case "+":
+                                lineReturn.arg1 = lineToParse.Split('+')[0];
+                                lineReturn.arg2 = lineToParse.Split('+')[1];
+                                break;
+                            case "-":
+                                lineReturn.arg1 = lineToParse.Split('-')[0];
+                                lineReturn.arg2 = lineToParse.Split('-')[1];
+                                break;
+                            case "*":
+                                lineReturn.arg1 = lineToParse.Split('*')[0];
+                                lineReturn.arg2 = lineToParse.Split('*')[1];
+                                break;
+                            case "/":
+                                lineReturn.arg1 = lineToParse.Split('/')[0];
+                                lineReturn.arg2 = lineToParse.Split('/')[1];
+                                break;
+                            case "%":
+                                lineReturn.arg1 = lineToParse.Split('%')[0];
+                                lineReturn.arg2 = lineToParse.Split('%')[1];
+                                break;
+                            case "raw":
+                                lineReturn.arg1 = parts[1];
+                                break;
+                        }
+                        switch (lineReturn.item)
+                        {
+                            case "var":
+                                lineReturn.arg1 = lineToParse.Split('=')[0];
+                                lineReturn.arg1 = lineReturn.arg1.Replace("var", "");
+                                lineReturn.arg2 = lineToParse.Split('=')[1];
+                                break;
+                        }
                     }
-                    switch (lineReturn.item)
+                    catch (Exception ex)
                     {
-                        case "var":
-                            lineReturn.arg1 = lineToParse.Split('=')[0];
-                            lineReturn.arg1 = lineReturn.arg1.Replace("var","");
-                            lineReturn.arg2 = lineToParse.Split('=')[1];
-                            break;
+                        lineReturn.recognised = false;
                     }
                 }
-                catch (Exception ex)
-                {
-                    lineReturn.recognised = false;
-                }
+                
                 if (!lineReturn.recognised)
                 {
                     lineReturn.item = lineToParse;
