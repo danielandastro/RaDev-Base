@@ -89,8 +89,8 @@ namespace IronRADev
                 public string ValPrinter(bool newLine, string varName)
                 {
                     var lineReturn = "";
-                    var line = "Console.WriteLine(varName);";
-                    var noLine = "Console.Write(varName);";
+                    var line = "System.Console.WriteLine(varName);";
+                    var noLine = "System.Console.Write(varName);";
                     lineReturn = newLine ? line.Replace("varName", varName) : noLine.Replace("varName", varName);
                     return lineReturn;
                 }
@@ -98,8 +98,8 @@ namespace IronRADev
                 public string VarPrinter(bool newLine, string valueStr)
                 {
                     var lineReturn = "";
-                    var line = "Console.WriteLine(varName);";
-                    var noLine = "Console.Write(varName);";
+                    var line = "System.Console.WriteLine(varName);";
+                    var noLine = "System.Console.Write(varName);";
                     lineReturn = newLine ? line.Replace("varName", valueStr) : noLine.Replace("varName", valueStr);
                     return lineReturn;
 
@@ -109,10 +109,14 @@ namespace IronRADev
     }
     public class IronConvert : RADEVItems
     {
+        public string StringReturn(string line)
+        {
+            return DataReturn(Parser(line));
+        }
         public string DataReturn(Line line)
         {
             var data = "";
-            if (!line.recognised) return "Invalid Line";
+            if (!line.recognised) return "//Invalid Line: "+line.item;
             var print = new RADevBaseItems.Printer();
             var varItems = new RADevBaseItems.Variables();
             var OPSItems = new RADevBaseItems.Operations();
@@ -247,6 +251,10 @@ namespace IronRADev
                 catch (Exception ex)
                 {
                     lineReturn.recognised = false;
+                }
+                if (!lineReturn.recognised)
+                {
+                    lineReturn.item = lineToParse;
                 }
             }
             return lineReturn;

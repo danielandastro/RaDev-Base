@@ -10,7 +10,7 @@ namespace ConsoleParser
 
             while (true)
             {
-                Console.WriteLine(convert.DataReturn(convert.Parser(Console.ReadLine())));
+                Console.WriteLine(convert.StringReturn(Console.ReadLine()));
             }
         }
     }
