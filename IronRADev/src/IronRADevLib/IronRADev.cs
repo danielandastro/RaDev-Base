@@ -13,7 +13,7 @@ namespace IronRADev
             public bool arg4;
             public bool recognised;
         }
-        public string[] itemList = { "write", "writel", "print", "printl", "+", "-", "/", "*", "%", "string", "num", "int", "raw" };
+        public string[] itemList = { "write", "writel", "+", "-", "/", "*", "%", "string", "num", "int", "raw" };
         public string[] ironItemList = { "var" };
         public class IronRADevItems
         {
