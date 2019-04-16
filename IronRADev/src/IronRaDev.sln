@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleParser", "ConsoleParser\ConsoleParser.csproj", "{AFB3B034-6852-4EEA-BDA7-763994B0EAD5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronRADevLib", "IronRADevLib\IronRADevLib.csproj", "{498B5584-4C43-4B39-963C-B6FCEFC3802A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,5 +15,9 @@ Global
 		{AFB3B034-6852-4EEA-BDA7-763994B0EAD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFB3B034-6852-4EEA-BDA7-763994B0EAD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFB3B034-6852-4EEA-BDA7-763994B0EAD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{498B5584-4C43-4B39-963C-B6FCEFC3802A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{498B5584-4C43-4B39-963C-B6FCEFC3802A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{498B5584-4C43-4B39-963C-B6FCEFC3802A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{498B5584-4C43-4B39-963C-B6FCEFC3802A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
