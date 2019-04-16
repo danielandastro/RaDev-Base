@@ -1,0 +1,8 @@
+﻿string dog = "hi"
+int yo = 3
+string dg
+write dog
+print "hi"
+writel dog
+printl "hiii"
+raw System.Console.WriteLine("hello");
