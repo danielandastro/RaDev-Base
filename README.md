@@ -7,7 +7,8 @@ A hello world can be written in a few ways:
 string x = "hello world"
 
 write x
-                                 <b> OR </b>
+
+                                 OR
                                  
 write "Hello world"
 
