@@ -1,0 +1,7 @@
+﻿string dog = "hi"
+int yo = 3
+string dg
+write dog
+write "hi"
+writel dog
+writel "hiii"
