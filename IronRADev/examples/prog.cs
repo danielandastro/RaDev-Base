@@ -4,11 +4,9 @@ static void Main(string[] args)
 {
 string  dog  =  "hi";
 
-dg
-System.Console.Write( dog);
-"hi"
+string  dg  =  "hi";
+System.Console.Write( "dog");
 System.Console.WriteLine( dog);
-"hiii"
 System.Console.WriteLine("hello");
 }
 }
